@@ -2,7 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
+import { MulterModule } from '@nestjs/platform-express/multer';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { join } from 'path';
 import { UsersModule } from './users/users.module';
 import { AllExceptionsFilter } from './utils/all-exceptions.filter';
 
@@ -16,6 +18,10 @@ import { AllExceptionsFilter } from './utils/all-exceptions.filter';
       limit: 50
     }),
     MongooseModule.forRoot(process.env.DB_URI),
+    /* file upload config */
+    MulterModule.register({
+      dest: join(__dirname, '..', 'files')
+    }),
     UsersModule,
   ],
   controllers: [],

@@ -1,10 +1,6 @@
 import { IsNotEmpty, IsArray, IsEmail, IsString, MaxLength, MinLength, IsOptional } from 'class-validator';
 
-export class CreateUserDto {
-  @IsNotEmpty({ message: 'لطفا شماره موبایل خود را وارد کنید' })
-  @IsArray()
-  mobile: string[];
-
+export class loginDto {
   @IsNotEmpty({ message: 'لطفا ایمیل خود را وارد کنید' })
   @IsEmail()
   @IsString()
@@ -16,8 +12,4 @@ export class CreateUserDto {
   @MinLength(8)
   @MaxLength(64)
   password: string;
-
-  @IsOptional()
-  @IsString()
-  wallet: string;
 }

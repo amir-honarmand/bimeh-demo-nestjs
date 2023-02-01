@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { Document } from 'mongoose';
+import { QueryPaginationSearch } from 'src/public-dto/query-pagination-search.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRepository } from './repository/user.repository';
@@ -9,16 +11,14 @@ export class UsersService {
     private readonly UserRepository: UserRepository
   ){}
   
-  async createUser(createUserDto: CreateUserDto): Promise<any> {
-    
-    
-    const createUser = await this.UserRepository.createUser(createUserDto);
+  async createUser(createUserDto: CreateUserDto): Promise<boolean> {
+    await this.UserRepository.createUser(createUserDto);
 
-    return createUser;
+    return true;
   }
 
-  async findAllUser(): Promise<any> {
-    return `This action returns all users`;
+  async findAllUser(queryPaginationDto: QueryPaginationSearch): Promise<object> {
+    return await this.UserRepository.findAllUser(queryPaginationDto);
   }
 
   async findOneUser(id: number): Promise<any> {
