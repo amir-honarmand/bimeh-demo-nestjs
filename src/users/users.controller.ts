@@ -9,6 +9,7 @@ import { editImageName } from 'src/utils/image-upload-edit-filename';
 import { imageFileFilter } from 'src/utils/image-upload.filter';
 import { BaseErrorException } from 'src/utils/error-handler';
 import { QueryPaginationSearch } from 'src/public-dto/query-pagination-search.dto';
+import { ValidateUserDto } from './dto/auth.dto';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -78,4 +79,26 @@ export class UsersController {
   removeUser(@Param('id') id: string): Promise<any> {
     return this.usersService.removeUser(+id);
   }
+
+  @Post('/auth/login')
+  async login(@Body() validateUserDto: ValidateUserDto): Promise<any> {
+    const data = await this.usersService.login(validateUserDto);
+    if (!data) {
+      BaseErrorException(
+        {},
+        false,
+        'OPERATION_FAILURE',
+        {}
+      );
+    };
+
+    return {
+      data,
+      success: true,
+      msg: 'OPERATION_COMPLETE',
+      status: 201,
+      meta: {}
+    };
+  }
+  
 }

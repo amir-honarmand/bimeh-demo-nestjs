@@ -19,5 +19,13 @@ export class CreateUserDto {
 
   @IsOptional()
   @IsString()
+  salt: string;
+
+  @IsOptional()
+  @IsString()
   wallet: string;
+
+  @IsOptional()
+  @IsString()
+  avatar: string;
 }

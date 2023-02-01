@@ -6,10 +6,11 @@ import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, userModel } from './entities/user.entity';
 import { UserRepository } from './repository/user.repository';
+import { JwtStrategy } from './strategy/jwt.strategy';
 
 @Module({
   controllers: [UsersController],
-  providers: [UsersService, UserRepository],
+  providers: [UsersService, UserRepository, JwtStrategy],
   imports: [
     PassportModule,
     JwtModule.register({

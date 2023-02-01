@@ -28,6 +28,9 @@ export class User {
   })
   password: string;
 
+  @Prop({ type: String, trim: true })
+  salt: string;
+
   @Prop({ type: String, trim: true, default: 0 })
   wallet: string;
 }
