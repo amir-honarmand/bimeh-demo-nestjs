@@ -1,4 +1,4 @@
-import { Injectable, ForbiddenException, ServiceUnavailableException } from '@nestjs/common';
+import { Injectable, ForbiddenException, ServiceUnavailableException, InternalServerErrorException } from '@nestjs/common';
 import { QueryPaginationSearch } from 'src/public-dto/query-pagination-search.dto';
 import { ValidateUserDto } from './dto/auth.dto';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -36,13 +36,14 @@ export class UsersService {
   }
   
   async createUser(createUserDto: CreateUserDto): Promise<boolean> {
+    // check mobile numbers validation
+    
     createUserDto = checkImageUpload(createUserDto, undefined, 'users');
 
     const passwordHash = await generate(createUserDto.password);
     createUserDto.password = passwordHash.hash;
     createUserDto.salt = passwordHash.salt;
 
-    
     await this.UserRepository.createUser(createUserDto);
 
     return true;
@@ -52,16 +53,15 @@ export class UsersService {
     return await this.UserRepository.findAllUser(queryPaginationDto);
   }
 
-  async findOneUser(id: number): Promise<any> {
-    return `This action returns a #${id} user`;
-  }
-
-  async updateUser(id: number, updateUserDto: UpdateUserDto): Promise<any> {
-    return `This action updates a #${id} user`;
-  }
-
-  async removeUser(id: number): Promise<any> {
-    return `This action removes a #${id} user`;
+  async updateUserWallet(id: string, updateUserDto: UpdateUserDto): Promise<boolean> {
+    // persian numbers check
+    
+    const amount: number = Number(updateUserDto.wallet);
+    if(!amount || isNaN(amount)) throw new InternalServerErrorException('amount is NaN!');
+    
+    await this.UserRepository.updateUserWallet(id, amount);
+    
+    return true;
   }
 
   async jwtSign(userId: string): Promise<string> {

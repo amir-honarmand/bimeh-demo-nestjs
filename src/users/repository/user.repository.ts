@@ -1,9 +1,8 @@
-import { InternalServerErrorException, NotFoundException } from "@nestjs/common";
+import { InternalServerErrorException, NotFoundException, UnprocessableEntityException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Document, Model } from "mongoose";
 import { QueryPaginationSearch } from "src/public-dto/query-pagination-search.dto";
 import { paginationCalc } from "src/utils/paginationCalc";
-import { ValidateUserDto } from "../dto/auth.dto";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { User } from "../entities/user.entity";
 
@@ -45,8 +44,8 @@ export class UserRepository {
         return {rows: findAllUser, count: countUsers};
     }
 
-    async findUser(userEmail): Promise<any> {
-        const findUser = await this.userModel.findOne({email: userEmail})
+    async findUser(email: string): Promise<any> {
+        const findUser = await this.userModel.findOne({email})
         .select('-createdAt -updatedAt -__v');
 
         if (!findUser) {
@@ -54,5 +53,19 @@ export class UserRepository {
         };
 
         return findUser;
+    }
+
+    async updateUserWallet(id: string, amount: number): Promise<any> {
+        const user = await this.userModel.findById(id);
+
+        const wallet = Number(user.wallet) + amount;
+        user.wallet = wallet.toString();
+
+        const updateUser = await user.save();
+        if (!updateUser) {
+            throw new UnprocessableEntityException('UPDATE_FAILURE!');
+        };
+
+        return user;
     }
 }

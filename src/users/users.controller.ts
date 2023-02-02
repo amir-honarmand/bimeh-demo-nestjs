@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, UseInterceptors, Query, ParamData } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseInterceptors, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -65,19 +65,29 @@ export class UsersController {
     };
   }
 
-  @Get(':id')
-  findOneUser(@Param('id') id: string): Promise<any> {
-    return this.usersService.findOneUser(+id);
-  }
-
+  // @UsePipes(ValidationPipe)
+  // @ApiBearerAuth()
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.User)
   @Put(':id')
-  updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<any> {
-    return this.usersService.updateUser(+id, updateUserDto);
-  }
+  async updateUserWallet(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): Promise<any> {
+    const data = await this.usersService.updateUserWallet(id, updateUserDto);
+    if (!data) {
+      BaseErrorException(
+        {},
+        false,
+        'OPERATION_FAILURE',
+        {}
+      );
+    };
 
-  @Delete(':id')
-  removeUser(@Param('id') id: string): Promise<any> {
-    return this.usersService.removeUser(+id);
+    return {
+      success: true,
+      msg: 'OPERATION_COMPLETE',
+      status: 200,
+      meta: {}
+    };
+  
   }
 
   @Post('/auth/login')
