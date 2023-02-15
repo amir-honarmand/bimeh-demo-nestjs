@@ -111,4 +111,24 @@ export class UsersController {
     };
   }
   
+  @Get('/data/from/url')
+  async sendRequestToUrl(): Promise<any> {
+    const data = await this.usersService.sendRequestToUrl();
+    if (!data) {
+      BaseErrorException(
+        {},
+        false,
+        'OPERATION_FAILURE',
+        {}
+      );
+    };
+
+    return {
+      data,
+      success: true,
+      msg: 'OPERATION_COMPLETE',
+      status: 200,
+      meta: {}
+    };
+  }
 }

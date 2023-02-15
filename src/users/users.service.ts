@@ -7,13 +7,14 @@ import { UserRepository } from './repository/user.repository';
 import { validate, generate } from '../utils/password';
 import { JwtService } from '@nestjs/jwt';
 import { checkImageUpload } from 'src/utils/check-image-upload';
+import { DynamicModuleService } from 'src/dynamicModule/dynamic-module.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     private readonly UserRepository: UserRepository,
     private jwtService: JwtService,
-
+    public dynamicModuleService: DynamicModuleService,
   ) { }
 
   async login(validateUserDto: ValidateUserDto): Promise<object> {
@@ -102,5 +103,10 @@ export class UsersService {
     }
 
     return +newNumber;
+  }
+
+  async sendRequestToUrl(): Promise<boolean>{
+    await this.dynamicModuleService.requestToUrl();
+    return true;
   }
 }

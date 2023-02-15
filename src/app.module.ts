@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MulterModule } from '@nestjs/platform-express/multer';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { join } from 'path';
+import { DynamicModuleModule } from './dynamicModule/dynamic-module.module';
 import { UsersModule } from './users/users.module';
 import { AllExceptionsFilter } from './utils/all-exceptions.filter';
 
@@ -23,6 +24,7 @@ import { AllExceptionsFilter } from './utils/all-exceptions.filter';
       dest: join(__dirname, '..', 'files')
     }),
     UsersModule,
+    DynamicModuleModule,
   ],
   controllers: [],
   providers: [

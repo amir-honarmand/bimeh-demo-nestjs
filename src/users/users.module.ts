@@ -7,11 +7,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, userModel } from './entities/user.entity';
 import { UserRepository } from './repository/user.repository';
 import { JwtStrategy } from './strategy/jwt.strategy';
+import { DynamicModuleModule } from 'src/dynamicModule/dynamic-module.module';
 
 @Module({
   controllers: [UsersController],
   providers: [UsersService, UserRepository, JwtStrategy],
   imports: [
+    DynamicModuleModule.getUrl('https://jsonplaceholder.typicode.com/todos/1'),
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
