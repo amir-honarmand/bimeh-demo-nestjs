@@ -5,10 +5,10 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Put } from '@nestjs/common/decorators';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from "multer";
-import { editImageName } from 'src/utils/image-upload-edit-filename';
-import { imageFileFilter } from 'src/utils/image-upload.filter';
-import { BaseErrorException } from 'src/utils/error-handler';
-import { QueryPaginationSearch } from 'src/public-dto/query-pagination-search.dto';
+import { editImageName } from '../utils/image-upload-edit-filename';
+import { imageFileFilter } from '../utils/image-upload.filter';
+import { BaseErrorException } from '../utils/error-handler';
+import { QueryPaginationSearch } from '../public-dto/query-pagination-search.dto';
 import { ValidateUserDto } from './dto/auth.dto';
 @Controller('users')
 export class UsersController {

@@ -6,8 +6,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRepository } from './repository/user.repository';
 import { validate, generate } from '../utils/password';
 import { JwtService } from '@nestjs/jwt';
-import { checkImageUpload } from 'src/utils/check-image-upload';
-import { DynamicModuleService } from 'src/dynamicModule/dynamic-module.service';
+import { checkImageUpload } from '../utils/check-image-upload';
+import { DynamicModuleService } from '../dynamicModule/dynamic-module.service';
 
 @Injectable()
 export class UsersService {

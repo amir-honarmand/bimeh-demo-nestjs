@@ -1,8 +1,8 @@
 import { InternalServerErrorException, NotFoundException, UnprocessableEntityException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Document, Model } from "mongoose";
-import { QueryPaginationSearch } from "src/public-dto/query-pagination-search.dto";
-import { paginationCalc } from "src/utils/paginationCalc";
+import { QueryPaginationSearch } from "../../public-dto/query-pagination-search.dto";
+import { paginationCalc } from "../../utils/paginationCalc";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { User } from "../entities/user.entity";
 

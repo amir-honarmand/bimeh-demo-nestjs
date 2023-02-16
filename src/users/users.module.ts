@@ -7,7 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, userModel } from './entities/user.entity';
 import { UserRepository } from './repository/user.repository';
 import { JwtStrategy } from './strategy/jwt.strategy';
-import { DynamicModuleModule } from 'src/dynamicModule/dynamic-module.module';
+import { DynamicModuleModule } from '../dynamicModule/dynamic-module.module';
 
 @Module({
   controllers: [UsersController],
